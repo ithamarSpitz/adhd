@@ -1,0 +1,11 @@
+
+# Use gradio 6.x which Spaces sometimes requires; include runtime deps
+fastapi>=0.95
+uvicorn>=0.14.0
+websockets>=10.4
+gradio==6.5.1
+
+huggingface_hub>=0.30.0,<1.0
+joblib==1.5.3
+scikit-learn==1.8.0
+pandas==2.2.3
