@@ -6,7 +6,7 @@ Train and predict adhd in classroom game sessions.
 
 **ADHD Game Session Classifier**
 
-- **Purpose:** Train a scikit-learn classifier to detect noisy game sessions and host it as an HTTP API on a Hugging Face Space.
+- **Purpose:** Train a scikit-learn classifier to detect if the player of the game sessions has ADHS and host it as an HTTP API on a Hugging Face Space.
 
 **Files of Interest**
 - `game_dataset.csv` : example dataset used for training and tests.
