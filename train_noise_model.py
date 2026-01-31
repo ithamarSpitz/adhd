@@ -11,11 +11,11 @@ accuracy, and serialises the trained pipeline for later use.
 Usage
 -----
 1. Place your dataset CSV in the same directory as this script.  By
-   default, the script expects ``fabricated_dataset.csv`` (the file you
+   default, the script expects ``game_dataset.csv`` (the file you
    downloaded earlier).
 2. Run the script from a terminal:
 
-   ``python train_noise_model.py --data fabricated_dataset.csv --model noise_model.pkl``
+   ``python train_noise_model.py --data game_dataset.csv --model noise_model.pkl``
 
    You can adjust the `--data` and `--model` paths as needed.
 3. After training, the script prints the model’s accuracy on a held‑out

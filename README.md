@@ -9,7 +9,7 @@ Train and predict noise in classroom game sessions.
 - **Purpose:** Train a scikit-learn classifier to detect noisy game sessions and host it as an HTTP API on a Hugging Face Space.
 
 **Files of Interest**
-- `fabricated_dataset.csv` : example dataset used for training and tests.
+- `game_dataset.csv` : example dataset used for training and tests.
 - `train_noise_model.py` : training script that saves a scikit-learn pipeline to a `.pkl` file.
 - `noise_model.pkl` : the serialized model file (created by training).
 - `app.py` : the Space entrypoint — FastAPI app exposing `POST /predict` for programmatic access.
@@ -27,7 +27,7 @@ Train and predict noise in classroom game sessions.
 **Train & Save the Model (local)**
 - Train using your CSV and save the pipeline to `noise_model.pkl`:
 	```bash
-	python train_noise_model.py --data fabricated_dataset.csv --model noise_model.pkl
+	python train_noise_model.py --data game_dataset.csv --model noise_model.pkl
 	```
 - Confirm the saved model exposes `n_features_in_` (the number of features). The Space expects inputs with the same number of features (this model expects 23 features).
 
@@ -80,7 +80,7 @@ Train and predict noise in classroom game sessions.
 **How to update the model workflow (full)**
 1. Retrain locally and overwrite `noise_model.pkl`:
 	 ```bash
-	 python train_noise_model.py --data fabricated_dataset.csv --model noise_model.pkl
+	 python train_noise_model.py --data game_dataset.csv --model noise_model.pkl
 	 ```
 2. Validate locally with `test.py` or `call_predict.py`.
 3. Upload the new model to the existing Space:
@@ -109,4 +109,4 @@ Train and predict noise in classroom game sessions.
 
 If you want, I can now:
 - add a short `README_MODEL.md` model card with metrics, or
-- run a batch test across rows in `fabricated_dataset.csv` and summarize predictions.
+- run a batch test across rows in `game_dataset.csv` and summarize predictions.
