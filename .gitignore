@@ -1,0 +1,13 @@
+/.venv/
+hf_token.txt
+noise_model.pkl
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+dist/
+build/
+*.egg-info/
