@@ -1,6 +1,6 @@
 /.venv/
 hf_token.txt
-noise_model.pkl
+adhd_model.pkl
 .DS_Store
 __pycache__/
 *.pyc

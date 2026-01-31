@@ -1,9 +1,8 @@
 """
-train_noise_model.py
+train_adhd_model.py
 ====================
 
-This script trains a logistic‑regression classifier to predict whether there was
-noise in a classroom game session based on gameplay metrics.  It reads a
+This script trains a logistic‑regression classifier to predict whether the player has ADHD in a game session based on gameplay metrics.  It reads a
 CSV dataset containing labeled examples, splits the data into training and
 testing sets, fits a scaler and a logistic regression model, evaluates
 accuracy, and serialises the trained pipeline for later use.
@@ -15,7 +14,7 @@ Usage
    downloaded earlier).
 2. Run the script from a terminal:
 
-   ``python train_noise_model.py --data game_dataset.csv --model noise_model.pkl``
+   ``python train_adhd_model.py --data game_dataset.csv --model adhd_model.pkl``
 
    You can adjust the `--data` and `--model` paths as needed.
 3. After training, the script prints the model’s accuracy on a held‑out
@@ -25,7 +24,7 @@ Usage
 Predicting new data
 -------------------
 Once the model has been trained and saved, you can load it in another
-script or an interactive session to predict the probability of noise
+script or an interactive session to predict the probability of adhd
 for new game sessions.  See the ``predict_example`` function at the
 bottom of this file for a demonstration.
 """
@@ -47,15 +46,15 @@ def train_model(data_path: str, model_path: str) -> None:
     ----------
     data_path : str
         Path to the CSV file containing the dataset.  The CSV must include a
-        column named ``noise`` representing the target label (1 = noise,
-        0 = no noise).
+        column named ``adhd`` representing the target label (1 = adhd,
+        0 = no adhd).
     model_path : str
         Path to which the trained model pipeline will be saved (.pkl file).
     """
     # Load the dataset
     df = pd.read_csv(data_path)
     if 'noise' not in df.columns:
-        raise ValueError("Dataset must include a 'noise' column as the target label.")
+        raise ValueError("Dataset must include a 'adhd' column as the target label.")
 
     # Separate features and target
     X = df.drop(columns=['noise'])
@@ -87,7 +86,7 @@ def train_model(data_path: str, model_path: str) -> None:
 
 
 def predict_example(model_path: str, example: dict) -> float:
-    """Predict the probability of noise for a single example.
+    """Predict the probability of adhd for a single example.
 
     Parameters
     ----------
@@ -96,12 +95,12 @@ def predict_example(model_path: str, example: dict) -> float:
     example : dict
         A dictionary of feature names and values representing a single game
         session.  The keys must match the column names in the training
-        dataset except for the ``noise`` label.
+        dataset except for the ``adhd`` label.
 
     Returns
     -------
     float
-        The predicted probability that the session had noise (value between
+        The predicted probability that the session had adhd (value between
         0 and 1).
     """
     # Load the model pipeline
@@ -110,14 +109,14 @@ def predict_example(model_path: str, example: dict) -> float:
     # Construct a DataFrame from the example (model expects a 2D array)
     X_new = pd.DataFrame([example])
 
-    # Predict the probability of the positive class (noise = 1)
+    # Predict the probability of the positive class (adhd = 1)
     prob = model.predict_proba(X_new)[0][1]
     return prob
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Train a logistic regression model to detect noise in game sessions.")
-    parser.add_argument('--data', type=str, required=True, help='Path to the CSV dataset with features and noise label.')
+    parser = argparse.ArgumentParser(description="Train a logistic regression model to detect adhd in game sessions.")
+    parser.add_argument('--data', type=str, required=True, help='Path to the CSV dataset with features and adhd label.')
     parser.add_argument('--model', type=str, required=True, help='Path to save the trained model (pickle file).')
     args = parser.parse_args()
 

@@ -5,16 +5,16 @@ python_version: "3.11"
 app_file: app.py
 ---
 
-# ADHD Noise Classifier (Hugging Face Space)
+# ADHD Classifier (Hugging Face Space)
 
-This repository contains the minimal files to deploy the `noise_model.pkl` scikit-learn model as a public Hugging Face Space using Gradio.
+This repository contains the minimal files to deploy the `adhd_model.pkl` scikit-learn model as a public Hugging Face Space using Gradio.
 
 Files:
-- `app.py` - Gradio app that loads `noise_model.pkl` and exposes a JSON `/api/predict` endpoint.
-- `noise_model.pkl` - your trained model (should be uploaded by `upload_model_to_hf.py`).
+- `app.py` - Gradio app that loads `adhd_model.pkl` and exposes a JSON `/api/predict` endpoint.
+- `adhd_model.pkl` - your trained model (should be uploaded by `upload_model_to_hf.py`).
 - `requirements-hf.txt` - dependencies for the Space.
 - `upload_model_to_hf.py` - script to create the Space and upload files programmatically.
-- `update_model_on_hf.py` - quick script to re-upload an updated `noise_model.pkl`.
+- `update_model_on_hf.py` - quick script to re-upload an updated `adhd_model.pkl`.
 
 Deploying (local, using the provided script)
 1. Install uploader deps locally:
@@ -29,12 +29,12 @@ $Env:HF_TOKEN = Get-Content .\hf_token.txt
 ```
 3. Run the upload script (choose a repo name):
 ```powershell
-python upload_model_to_hf.py --model noise_model.pkl --repo-name adhd-noise-classifier
+python upload_model_to_hf.py --model adhd_model.pkl --repo-name adhd-noise-classifier
 ```
 
 Updating the model later:
 ```powershell
-python update_model_on_hf.py --model noise_model.pkl --repo-name adhd-noise-classifier
+python update_model_on_hf.py --model adhd_model.pkl --repo-name adhd-noise-classifier
 ```
 
 Calling the deployed API

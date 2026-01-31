@@ -1,17 +1,17 @@
-# ADHD Game Session Noise Classifier
+# ADHD Game Session Classifier
 
-Train and predict noise in classroom game sessions.
+Train and predict adhd in classroom game sessions.
 
 ## Setup
 
-**ADHD Game Session Noise Classifier**
+**ADHD Game Session Classifier**
 
 - **Purpose:** Train a scikit-learn classifier to detect noisy game sessions and host it as an HTTP API on a Hugging Face Space.
 
 **Files of Interest**
 - `game_dataset.csv` : example dataset used for training and tests.
-- `train_noise_model.py` : training script that saves a scikit-learn pipeline to a `.pkl` file.
-- `noise_model.pkl` : the serialized model file (created by training).
+- `train_adhd_model.py` : training script that saves a scikit-learn pipeline to a `.pkl` file.
+- `adhd_model.pkl` : the serialized model file (created by training).
 - `app.py` : the Space entrypoint — FastAPI app exposing `POST /predict` for programmatic access.
 - `requirements-hf.txt` : packages installed by the Space during build.
 - `upload_model_to_hf.py` / `update_model_on_hf.py` : helpers to create/update the Space repository and upload files.
@@ -25,9 +25,9 @@ Train and predict noise in classroom game sessions.
 	```
 
 **Train & Save the Model (local)**
-- Train using your CSV and save the pipeline to `noise_model.pkl`:
+- Train using your CSV and save the pipeline to `adhd_model.pkl`:
 	```bash
-	python train_noise_model.py --data game_dataset.csv --model noise_model.pkl
+	python train_adhd_model.py --data game_dataset.csv --model adhd_model.pkl
 	```
 - Confirm the saved model exposes `n_features_in_` (the number of features). The Space expects inputs with the same number of features (this model expects 23 features).
 
@@ -37,11 +37,11 @@ Train and predict noise in classroom game sessions.
 	```bash
 	# set token in env (recommended) or ensure hf_token.txt contains it
 	setx HF_TOKEN "<your-token>"          # Windows PowerShell, or use $Env:HF_TOKEN for session
-	python upload_model_to_hf.py --model noise_model.pkl
+	python upload_model_to_hf.py --model adhd_model.pkl
 	```
 - Update only the model file (faster):
 	```bash
-	python update_model_on_hf.py --model noise_model.pkl
+	python update_model_on_hf.py --model adhd_model.pkl
 	```
 - Notes:
 	- `requirements-hf.txt` is used by the Space builder; we added `fastapi` and `uvicorn` so the FastAPI app runs.
@@ -78,14 +78,14 @@ Train and predict noise in classroom game sessions.
 	```
 
 **How to update the model workflow (full)**
-1. Retrain locally and overwrite `noise_model.pkl`:
+1. Retrain locally and overwrite `adhd_model.pkl`:
 	 ```bash
-	 python train_noise_model.py --data game_dataset.csv --model noise_model.pkl
+	 python train_adhd_model.py --data game_dataset.csv --model adhd_model.pkl
 	 ```
 2. Validate locally with `test.py` or `call_predict.py`.
 3. Upload the new model to the existing Space:
 	 ```bash
-	 python update_model_on_hf.py --model noise_model.pkl
+	 python update_model_on_hf.py --model adhd_model.pkl
 	 ```
 4. Wait for the Space to rebuild (watch the Space logs on the Hugging Face UI) and then call the `/predict` endpoint.
 

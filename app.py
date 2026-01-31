@@ -5,7 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-MODEL_PATH = "noise_model.pkl"
+MODEL_PATH = "adhd_model.pkl"
 
 try:
     model = joblib.load(MODEL_PATH)
