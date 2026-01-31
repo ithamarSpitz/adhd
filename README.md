@@ -77,6 +77,70 @@ Train and predict adhd in classroom game sessions.
 	print(r.status_code, r.json())
 	```
 
+- C# (.NET 6+):
+  - Subdomain (no auth):
+	```csharp
+	using System;
+	using System.Net.Http;
+	using System.Text;
+	using System.Text.Json;
+	using System.Threading.Tasks;
+
+	class Program
+	{
+		static async Task Main()
+		{
+			var url = "https://ithamarspitz-adhd-noise-classifier.hf.space/predict";
+			double[] features = new double[] {
+				56,22,2,3,1,81,2.41,0.76,212,1.36,1.84,4,0,0,18,133,0.324,1.498,2,0.585,1.285,6,6
+			};
+			var payload = new { data = new double[][] { features } };
+			var json = JsonSerializer.Serialize(payload);
+
+			using var http = new HttpClient();
+			using var content = new StringContent(json, Encoding.UTF8, "application/json");
+			var resp = await http.PostAsync(url, content);
+			var respText = await resp.Content.ReadAsStringAsync();
+			Console.WriteLine($"Status: {(int)resp.StatusCode}");
+			Console.WriteLine(respText);
+		}
+	}
+	```
+
+  - Router (with HF token):
+	```csharp
+	using System;
+	using System.IO;
+	using System.Net.Http;
+	using System.Text;
+	using System.Text.Json;
+	using System.Threading.Tasks;
+
+	class Program
+	{
+		static async Task Main()
+		{
+			var url = "https://router.huggingface.co/spaces/ithamarspitz/adhd-noise-classifier";
+			var token = File.ReadAllText("hf_token.txt").Trim(); // keep this file out of git
+
+			double[] features = new double[] {
+				56,22,2,3,1,81,2.41,0.76,212,1.36,1.84,4,0,0,18,133,0.324,1.498,2,0.585,1.285,6,6
+			};
+
+			var payload = new { data = new double[][] { features }, fn_index = 0 };
+			var json = JsonSerializer.Serialize(payload);
+
+			using var http = new HttpClient();
+			http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+			using var content = new StringContent(json, Encoding.UTF8, "application/json");
+			var resp = await http.PostAsync(url, content);
+			var respText = await resp.Content.ReadAsStringAsync();
+			Console.WriteLine($"Status: {(int)resp.StatusCode}");
+			Console.WriteLine(respText);
+		}
+	}
+	```
+
 **How to update the model workflow (full)**
 1. Retrain locally and overwrite `adhd_model.pkl`:
 	 ```bash
